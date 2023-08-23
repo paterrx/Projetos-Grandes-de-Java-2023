@@ -1,0 +1,37 @@
+Usar esse arquivo para:
+
+	1) Identificar os membros do grupo
+	
+		Grupo:
+		
+			RM 95620 - Abner Aragon
+			RM 93688 - Gabriel Antunes
+			RM 93266 - Gabriel Reis
+	
+	2) Apresentacaoa descricao projeto desenvolvido
+	
+		Parametros utilizados:
+	
+			Coordenadas não devem se repetir, chave única.
+	
+			PH deve estar entre 0 e 14, sendo perto de 0 mais acidos e perto de 14 mais alcalino. Onde 7 seria o valor neutro, 
+			é a unidade medida do potencial hidrogênico do solo.
+	
+			Umidade deve estar entre 30 e 70, é a unidade de medida de água no solo, medida em volume de água sobre volume total do solo.
+			
+			Metano deve estar entre 100 e 5000 ppm, é a unidade de medida da quantidade de gás metano encontrado pelo sensor no solo.
+			
+		Descricao do funcionamento:
+		
+			O sistema irá inicializar uma lista para armazenar sensores e uma fila para armazenar uma fila de sensores com parâmetros fora do 
+			padrão, tanto a lista quanto a fila irão ordenar sensores, com a lista em ordem crescente por uma soma das coordenadas x e y.
+		
+			Irá ser questionado ao usuário se ele deseja digitar os valorese por si mesmo instanciando objetos do tipo Sensores e inserindo na
+			lista, ou, poderá ser utilizado valores mocados já previamente feitos pela professora, aonde os dados serão apresentados de forma 
+			automática.
+			
+			Será apresentado algumas opções para o usuário escolher, como, inserir sensores, pesquisar sensores, remover sensores e visualizar
+			todos os sensores, verificar se há sensores com parâmetros incorretos, e dar a opção de enviar a fila.
+			Opcao de visualizar os sensores dentro da fila e opcao de remover esses sensores.
+		
+		
