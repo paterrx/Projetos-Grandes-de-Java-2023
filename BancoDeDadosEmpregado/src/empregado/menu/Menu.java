@@ -80,7 +80,20 @@ public class Menu {
 			showMessageDialog(null, "Nenhum departamento criado no momento, "
 					+ "nao e possivel listar empregados. ");
 		} else {
-			
+			EmpregadoDAO empDAO = new EmpregadoDAO();
+			int id = parseInt(showInputDialog("ID"));
+			String aux = empDAO.pesquisar(id);
+			if(aux == null) {
+				showMessageDialog(null, "Empregado não encontrado");
+			} else {
+				String novoNome = showInputDialog("Novo nome");
+				double novoSalario = parseDouble(showInputDialog("Novo salário"));
+				Empregado empregado = new Empregado(id, novoNome, novoSalario);
+				empregado.setId(id);
+				empregado.setNome(novoNome);
+				empregado.setSalario(novoSalario);
+				empDAO.atualizar(empregado);
+			}	
 		}
 	}
 

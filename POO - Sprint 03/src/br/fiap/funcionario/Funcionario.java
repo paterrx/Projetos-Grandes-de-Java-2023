@@ -12,17 +12,17 @@ public class Funcionario {
 	private int codigo;
 	private String nome;
 	private String email;
-	private int telefone;
+	private long telefone;
 	private double salario;
 	private LocalDateTime localDateTime = LocalDateTime.now();
 	private Date sqlDate = Date.valueOf(localDateTime.toLocalDate());;
 	private String sexo;
 	private Endereco endereco;
 	private Departamento departamento;
-	private String nomeDoEndereco;
-	private String nomeDoDepartamento;
+	private int idDoEndereco;
+	private int idDoDepartamento;
 	
-	public Funcionario(int id, int codigo, String nome, String email, int telefone, double salario,
+	public Funcionario(int id, int codigo, String nome, String email, long telefone, double salario,
 			String sexo, Endereco endereco, Departamento departamento) {
 		this.id = id;
 		this.codigo = codigo;
@@ -35,8 +35,8 @@ public class Funcionario {
 		this.departamento = departamento;
 	}
 
-	public Funcionario(int id, int codigo, String nome, String email, int telefone, double salario, Date sqlDate,
-			String sexo, String nomeDoEndereco, String nomeDoDepartamento) {
+	public Funcionario(int id, int codigo, String nome, String email, long telefone, double salario, Date sqlDate,
+			String sexo, int idDoEndereco, int idDoDepartamento) {
 		this.id = id;
 		this.codigo = codigo;
 		this.nome = nome;
@@ -45,8 +45,14 @@ public class Funcionario {
 		this.salario = salario;
 		this.sqlDate = sqlDate;
 		this.sexo = sexo;
-		this.nomeDoEndereco = nomeDoEndereco;
-		this.nomeDoDepartamento = nomeDoDepartamento;
+		this.idDoEndereco = idDoEndereco;
+		this.idDoDepartamento = idDoDepartamento;
+	}
+
+	public Funcionario(int id, String nome, double salario) {
+		this.id = id;
+		this.nome = nome;
+		this.salario = salario;
 	}
 
 	public int getId() {
@@ -81,11 +87,11 @@ public class Funcionario {
 		this.email = email;
 	}
 
-	public int getTelefone() {
+	public long getTelefone() {
 		return telefone;
 	}
 
-	public void setTelefone(int telefone) {
+	public void setTelefone(long telefone) {
 		this.telefone = telefone;
 	}
 
@@ -120,21 +126,21 @@ public class Funcionario {
 	public void setDepartamento(Departamento departamento) {
 		this.departamento = departamento;
 	}
-	
-	public String getNomeDoEndereco() {
-		return nomeDoEndereco;
+
+	public int getIdDoEndereco() {
+		return idDoEndereco;
 	}
 
-	public void setNomeDoEndereco(String nomeDoEndereco) {
-		this.nomeDoEndereco = nomeDoEndereco;
+	public void setIdDoEndereco(int idDoEndereco) {
+		this.idDoEndereco = idDoEndereco;
 	}
 
-	public String getNomeDoDepartamento() {
-		return nomeDoDepartamento;
+	public int getIdDoDepartamento() {
+		return idDoDepartamento;
 	}
 
-	public void setNomeDoDepartamento(String nomeDoDepartamento) {
-		this.nomeDoDepartamento = nomeDoDepartamento;
+	public void setIdDoDepartamento(int idDoDepartamento) {
+		this.idDoDepartamento = idDoDepartamento;
 	}
 
 	public Date getsqlDate() {

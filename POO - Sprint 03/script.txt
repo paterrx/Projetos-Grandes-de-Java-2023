@@ -1,58 +1,82 @@
-/*Criando tabela CIDADE*/
+DROP TABLE CIDADE CASCADE CONSTRAINTS;
+DROP TABLE ENDERECO CASCADE CONSTRAINTS;
+DROP TABLE DEPARTAMENTO CASCADE CONSTRAINTS;
+DROP TABLE FUNCIONARIO CASCADE CONSTRAINTS;
+
+/Criando tabela CIDADE/
 CREATE TABLE CIDADE(
     id NUMBER(10) NOT NULL,
     nome VARCHAR2(20) NOT NULL
 );
 
-/*Adicionando Constraints na tabela cidade*/
+/Adicionando Constraints na tabela cidade/
 ALTER TABLE CIDADE ADD CONSTRAINT pk_cidade PRIMARY KEY(id);
 
-/*Criando tabela ENDEREÇO*/
+/Criando tabela ENDEREÇO/
 CREATE TABLE ENDERECO(
     id  NUMBER(10) NOT NULL,
-    sigla VARCHAR2(2) NOT NULL,
-    cidade NUMBER(10) NOT NULL
+    nome VARCHAR2(30) NOT NULL,
+    cidade NUMBER(10)
 );
 
-/*Criando constraints da tabela ENDEREÇO*/
+/Criando constraints da tabela ENDEREÇO/
 ALTER TABLE ENDERECO ADD CONSTRAINT pk_endereco PRIMARY KEY(id);
 ALTER TABLE ENDERECO ADD CONSTRAINT fk_endereco FOREIGN KEY(cidade)
 REFERENCES CIDADE(id);
 
-/*Criando tabela DEPARTAMENTO*/
+/Criando tabela DEPARTAMENTO/
 CREATE TABLE DEPARTAMENTO(
     id NUMBER(10) NOT NULL,
     codigo NUMBER(10) NOT NULL,
     nome VARCHAR2(30) NOT NULL,
-    qtd_funcionarios NUMBER (12,2)
+    qtd_funcionarios NUMBER (12,2) NOT NULL
 );
 
-/*Criando constraints da tabela FUNCIONARIO*/
+/Criando constraints da tabela FUNCIONARIO/
 ALTER TABLE DEPARTAMENTO ADD CONSTRAINT pk_departamento PRIMARY KEY(id);
 ALTER TABLE DEPARTAMENTO ADD CONSTRAINT uk_departaemnto UNIQUE(codigo);
 
-/*Criando tabela FUNCIONARIO*/
+/Criando tabela FUNCIONARIO/
 CREATE TABLE FUNCIONARIO(
     id  NUMBER(10) NOT NULL,
     codigo VARCHAR2(10) NOT NULL,
     nome VARCHAR2(30) NOT NULL,
     email VARCHAR2(30),
-    telefone NUMBER(11),
-    salario NUMBER(8,2) CONSTRAINT salario_menor_zero CHECK (salario < 0),
+    telefone NUMBER(20),
+    salario NUMBER(8,2) NOT NULL,
     data_contratacao DATE DEFAULT SYSDATE,
-    sexo VARCHAR2(20),
+    sexo VARCHAR2(2),
     endereco NUMBER(10) NOT NULL,
     departamento NUMBER(10) NOT NULL
 );
 
-/*Criando constraints da tabela FUNCIONARIO*/
+/Criando constraints da tabela FUNCIONARIO/
 ALTER TABLE FUNCIONARIO ADD CONSTRAINT pk_funcionario PRIMARY KEY(id);
 ALTER TABLE FUNCIONARIO ADD CONSTRAINT uk_funcionario UNIQUE(codigo);
+ALTER TABLE FUNCIONARIO ADD CONSTRAINT verificacao_salario CHECK(salario > 0);
+ALTER TABLE FUNCIONARIO ADD CONSTRAINT verificacao_sexo CHECK(sexo IN('M','F'));
+ALTER TABLE FUNCIONARIO ADD CONSTRAINT fk_dep_funcionario FOREIGN KEY(departamento)
+REFERENCES DEPARTAMENTO(id);
+ALTER TABLE FUNCIONARIO ADD CONSTRAINT fk_end_funcionario FOREIGN KEY(endereco)
+REFERENCES ENDERECO(id);
+COMMIT;
 
-ALTER TABLE FUNCIONARIO ADD CONSTRAINT fk_funcionario_endereco
-FOREIGN KEY (endereco) REFERENCES ENDERECO(id);
+INSERT INTO DEPARTAMENTO VALUES(1, 0001,'RH', 250);
+INSERT INTO DEPARTAMENTO VALUES(2, 0002,'Producao', 500);
+INSERT INTO DEPARTAMENTO VALUES(3, 0003,'Montagem', 1000);
+INSERT INTO DEPARTAMENTO VALUES(4, 0004,'Logistico', 1500);
+INSERT INTO DEPARTAMENTO VALUES(5, 0005,'Operacional', 2000);
 
-ALTER TABLE FUNCIONARIO ADD CONSTRAINT fk_funcionario_dep
-FOREIGN KEY (departamento) REFERENCES DEPARTAMENTO(id);
+INSERT INTO CIDADE VALUES(1, 'Sao Paulo');
+INSERT INTO CIDADE VALUES(2, 'Santa Catarina');
+INSERT INTO CIDADE VALUES(3, 'Mogi das Cruzes'); 
+INSERT INTO CIDADE VALUES(4, 'Rio de Janeiro'); 
+INSERT INTO CIDADE VALUES(5, 'Campinas'); 
+
+INSERT INTO ENDERECO VALUES(1, 'Rua Domingos Belmonte, N70', 1);
+INSERT INTO ENDERECO VALUES(2,'Rua Emilia Galli Augusto, N12', 2);
+INSERT INTO ENDERECO VALUES(3,'Rua Leonel Guedes, N45', 3);
+INSERT INTO ENDERECO VALUES(4,'Rua Geralda Martins, N68', 4);
+INSERT INTO ENDERECO VALUES(5,'Avenida Jose Scarpel, N120', 5);
 
 commit;

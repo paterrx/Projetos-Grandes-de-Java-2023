@@ -14,6 +14,10 @@ public class Departamento {
 		this.qtd_funcionarios = qtd_funcionarios;
 	}
 
+	public Departamento(int id) {
+		this.id = id;
+	}
+
 	public int getId() {
 		return id;
 	}

@@ -75,7 +75,7 @@ public class EmpregadoDAO {
 				double salario = rs.getDouble("salario");
 				String nomeDep = rs.getString("departamento");
 				Departamento departamento = new Departamento(nomeDep);
-				Empregado empregado = new Empregado(nome, salario, departamento);
+				Empregado empregado = new Empregado(0, nome, salario, departamento);
 				lista.add(empregado);
 			}
 			ps.close();

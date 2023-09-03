@@ -14,10 +14,10 @@ public class Empregado {
 		this.departamento = departamento;
 	}
 	
-	public Empregado(String nome, double salario, Departamento departamento) {
+	public Empregado(int id, String nome, double salario) {
+		this.id = id;
 		this.nome = nome;
 		this.salario = salario;
-		this.departamento = departamento;
 	}
 
 	public int getId() {

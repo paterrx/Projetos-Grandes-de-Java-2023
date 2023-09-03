@@ -30,7 +30,7 @@ public class FuncionarioDAO {
 			ps.setInt(2, funcionario.getCodigo());
 			ps.setString(3, funcionario.getNome());
 			ps.setString(4, funcionario.getEmail());
-			ps.setInt(5, funcionario.getTelefone());
+			ps.setLong(5, funcionario.getTelefone());
 			ps.setDouble(6, funcionario.getSalario());
 			ps.setDate(7, funcionario.getsqlDate());
 			ps.setString(8, funcionario.getSexo());
@@ -65,16 +65,47 @@ public class FuncionarioDAO {
 			rs = ps.executeQuery();
 			if(rs.next()) {
 				aux = "";
-				aux += rs.getInt("ID") + "\n";
-				aux += rs.getInt("CODIGO") + "\n";
-				aux += rs.getString("NOME") + "\n";
-				aux += rs.getString("EMAIL") + "\n";
-				aux += rs.getInt("TELEFONE") + "\n";
-				aux += rs.getDouble("SALARIO") + "\n";
-				aux += rs.getDate("DATA_CONTRATACAO") + "\n";
-				aux += rs.getString("SEXO") + "\n";
-				aux += rs.getString("ENDERECO") + "\n";
-				aux += rs.getString("DEPARTAMENTO") + "\n";
+				aux += "ID: " 		+ rs.getInt("ID") + "\n";
+				aux += "Codigo: " 	+ rs.getInt("CODIGO") + "\n";
+				aux += "Nome: " 	+ rs.getString("NOME") + "\n";
+				aux += "Email: " 	+ rs.getString("EMAIL") + "\n";
+				aux += "Telefone: " + rs.getLong("TELEFONE") + "\n";
+				aux += "Salario: " 	+ rs.getDouble("SALARIO") + "\n";
+				aux += "Data da CTT: " 	+ rs.getDate("DATA_CONTRATACAO") + "\n";
+				aux += "Sexo: " 	+ rs.getString("SEXO") + "\n";
+				aux += "ID do End: " 	+ rs.getInt("ENDERECO") + "\n";
+				aux += "ID do Dep: " 	+ rs.getInt("DEPARTAMENTO") + "\n";
+			}
+			ps.close();
+			rs.close();
+		} catch (SQLException e) {
+			System.out.println("Erro ao pesquisar empregado\n + e");
+			e.printStackTrace();
+		}
+		
+		return aux;
+	}
+	
+	public String pesquisarCodigo(int codigo) {
+		String aux = null;
+		sql = "select * from funcionario where codigo = ?";
+
+		try(Connection connection = conexao.conectar()) {
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, codigo);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				aux = "";
+				aux += "ID: " 		+ rs.getInt("ID") + "\n";
+				aux += "Codigo: " 	+ rs.getInt("CODIGO") + "\n";
+				aux += "Nome: " 	+ rs.getString("NOME") + "\n";
+				aux += "Email: " 	+ rs.getString("EMAIL") + "\n";
+				aux += "Telefone: " + rs.getLong("TELEFONE") + "\n";
+				aux += "Salario: " 	+ rs.getDouble("SALARIO") + "\n";
+				aux += "Data da CTT: " 	+ rs.getDate("DATA_CONTRATACAO") + "\n";
+				aux += "Sexo: " 	+ rs.getString("SEXO") + "\n";
+				aux += "ID do End: " 	+ rs.getInt("ENDERECO") + "\n";
+				aux += "ID do Dep: " 	+ rs.getInt("DEPARTAMENTO") + "\n";
 			}
 			ps.close();
 			rs.close();
@@ -88,15 +119,15 @@ public class FuncionarioDAO {
 	
 	public List<Funcionario> listar () {
 		List<Funcionario> lista = new LinkedList<>();
-		sql = "select * from funcionario where id = ?";
+		sql = "select * from funcionario";
 		
 		try(Connection connection = conexao.conectar()) {
 			ps = connection.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while (rs.next() == true) {
 				lista.add(new Funcionario(rs.getInt("ID"), rs.getInt("CODIGO"), rs.getString("NOME"), rs.getString("EMAIL"), 
-				rs.getInt("TELEFONE"), rs.getDouble("SALARIO"), rs.getDate("DATA_CONTRATACAO"), rs.getString("SEXO"), 
-				rs.getString("ENDERECO"), rs.getString("DEPARTAMENTO")));
+				rs.getLong("TELEFONE"), rs.getDouble("SALARIO"), rs.getDate("DATA_CONTRATACAO"), rs.getString("SEXO"), 
+				rs.getInt("ENDERECO"), rs.getInt("DEPARTAMENTO")));
 			}
 			ps.close();
 			rs.close();
@@ -112,6 +143,21 @@ public class FuncionarioDAO {
 		try(Connection connection = conexao.conectar()) {
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, id);
+			ps.execute();
+			ps.close();
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("Erro ao pesquisar empregado\n + e");
+		}
+	}
+	
+	public void atualizar(Funcionario funcionario) {
+		sql = "update funcionario set nome = ?, salario = ? where id = ?";
+		try(Connection connection = conexao.conectar()) {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, funcionario.getNome());
+			ps.setDouble(2, funcionario.getSalario());
+			ps.setInt(3, funcionario.getId());
 			ps.execute();
 			ps.close();
 			connection.close();
